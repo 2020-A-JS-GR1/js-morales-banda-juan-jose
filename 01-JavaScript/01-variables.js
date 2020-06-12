@@ -8,7 +8,7 @@ numeroDos = 8;
 numeroUno = false;
 numeroDos = true;
 
-//Inmutable
+// Inmutables
 const configuracionArchivos = "PDF";
 // configuracionArchivos = "XML";
 const numero = 1;  //number
