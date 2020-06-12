@@ -10,6 +10,7 @@ numeroDos = true;
 
 //Inmutable
 const configuracionArchivos = "PDF";
+
 // configuracionArchivos = "XML";
 const numero = 1;  //number
 const sueldo = 1.2;  // numbre
