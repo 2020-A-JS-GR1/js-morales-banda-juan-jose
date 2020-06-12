@@ -114,3 +114,5 @@ const arregloNumeros = {
 
 console.log(juan);
 console.log(arregloNumeros);
+
+
