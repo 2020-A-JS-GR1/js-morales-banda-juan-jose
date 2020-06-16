@@ -101,19 +101,73 @@ const juan = {
         color: "naranja",
         talla: "M"
     },
-    mascotas: ["Rufo", "Juamba", "Boxy"]
+    mascotas: ["Rufo", "Juamba", "Julien"], // Arreglo
 };  // object
-
-// Acceder a los datos de un objeto
+// Poner , siempreal final del valor en un objeto.
+// Acceder a los datos y propiedades de un objeto
 juan.nombre;  // "Juan"
 juan.apellido;  // "Morales"
-
-
-const arregloNumeros = {
-
-}  // object
+juan["nombre"];  // "Juan"
 
 console.log(juan);
-console.log(arregloNumeros);
+juan.nombre = "Jose";
+console.log((juan));
+juan["nombre"] = "Juan";
+console.log((juan));
+juan.sueldo;
+console.log((juan.sueldo));  // undefined
+juan.sueldo = 1.2;
+console.log((juan.sueldo));  // 1.2
+juan["gastos"] = 0.8;
+console.log((juan.gastos));  // 0.8
+juan.gastos = undefined;
+console.log((juan.gastos));  // undefined
+
+console.log(Object.keys(juan));
+console.log(Object.values(juan));
+delete juan.gastos; // eliminará la llave "gastos"
+console.log(Object.keys(juan));
+console.log(Object.values(juan));
+
+//  Lista de variables por valor en JS
+//  number, string, boolean y undefined
+let edadJuan = 21;
+let edadJose = edadJuan;
+console.log(edadJuan);  // 21
+console.log(edadJose);  // 21
+edadJuan = edadJuan + 1;
+console.log(edadJuan);  // 22
+console.log(edadJose);  // 21
+
+
+//  Lista de variables por referencia en JS
+let carlos = {
+    nombre: "Carlos",
+};
+// let ruben = carlos;  // Aquí no se clona al objeto, se está referenciando al mismo espacio de memoria
+// console.log(carlos);  // Carlos
+// console.log(ruben);  // Carlos
+// ruben.nombre = "Ruben"
+// console.log(carlos);  // Ruben
+// console.log(ruben);  // Ruben
+// delete  carlos.nombre;
+// console.log(carlos);  // {}
+// console.log(ruben);  // {}
+
+let ruben = Object.assign({},carlos);
+console.log(carlos);  // Carlos
+console.log(ruben);  // Carlos
+ruben.nombre = "Ruben";
+delete carlos.nombre;
+console.log(carlos);  // {}
+console.log(ruben);  // Ruben
+
+
+// const arregloNumeros = {
+//
+// }  // object
+//
+// console.log(juan);
+// console.log(arregloNumeros);
 
 
