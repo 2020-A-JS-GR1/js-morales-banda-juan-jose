@@ -1,7 +1,7 @@
 const inquirer = require('inquirer');
 const fs = require('fs');
 
-const pathEscuderia = './03-escuderias.json';
+const pathEscuderias = './03-escuderias.json';
 const pathPilotos = './03-pilotos.json';
 
 async function main() {
@@ -27,17 +27,15 @@ async function main() {
                 console.log(respuesta)
                 switch (respuesta) {
                     case 'Listar Escuderias' :
-                        const contenido = await promesaLeerArchivo(pathEscuderia)
-                        // console.log(typeof contenido)  // String
-                        console.log(JSON.parse(contenido));
+                        await leerEscuderia();
                         break;
-                    case 'Crear Escuderia':
+                    case 'Crear Escuderias':
                         await crearEscuderia();
                         break;
-                    case 'Modificar Escuderia':
+                    case 'Modificar Escuderias':
                         await modificarEscuderia();
                         break;
-                    case 'Eliminar Escuderia':
+                    case 'Eliminar Escuderias':
                         await eliminarEscuderia()
                         break;
                     case 'Salir':
@@ -51,16 +49,16 @@ async function main() {
                 console.log(respuesta)
                 switch (respuesta) {
                     case 'Listar Pilotos' :
-//                        const a = await promesaLeerArchivo(pathEscuderia)
+                        await leerPiloto();
                         break;
                     case 'Crear Pilotos':
-
+                        await crearPiloto();
                         break;
                     case 'Modificar Pilotos':
-
+                        await modificarPiloto();
                         break;
                     case 'Eliminar Pilotos':
-
+                        await eliminarPiloto();
                         break;
                     case 'Salir':
                         throw ("Gracias por usar este programa");
@@ -129,6 +127,18 @@ const promesaEscribirArchivo = (path, contenidoNuevo) => {
         });
 }
 
+async function leerEscuderia() {
+    const contenido = await promesaLeerArchivo(pathEscuderias)
+    let arregloEscuderias = JSON.parse(contenido)
+
+    arregloEscuderias.forEach(
+        (valorActual, indiceActual) => {
+            console.log('Indice:', indiceActual)
+            console.log('Escuderia:', valorActual)
+        }
+    )
+}
+
 async function crearEscuderia() {
     try {
         const datosEscuderia = await inquirer
@@ -159,7 +169,7 @@ async function crearEscuderia() {
                     message: 'Ingrese la cantidad de campeonatos que ha ganado la escudería',
                 },
             ]);
-        const contenido = await promesaLeerArchivo(pathEscuderia)
+        const contenido = await promesaLeerArchivo(pathEscuderias)
         // console.log(typeof contenido)
         // console.log(typeof datosEscuderia)  // OBJECT
         // console.log(datosEscuderia)
@@ -174,7 +184,7 @@ async function crearEscuderia() {
             });
         // console.log('string', JSON.stringify(datosEscuderia))
         // console.log(contenidoNuevo)
-        await promesaEscribirArchivo(pathEscuderia, JSON.stringify(contenidoNuevo));
+        await promesaEscribirArchivo(pathEscuderias, JSON.stringify(contenidoNuevo));
     } catch (e) {
         console.log(e)
     }
@@ -182,27 +192,34 @@ async function crearEscuderia() {
 
 async function modificarEscuderia() {
     try {
-        const contenido = await promesaLeerArchivo(pathEscuderia)
+        const contenido = await promesaLeerArchivo(pathEscuderias)
         let arregloEscuderias = JSON.parse(contenido)
         let arregloEscuderiaEncontrada = []
-        const busqueda = await inquirer.prompt(
-            {
-                type: 'input',
-                name: 'respuestaBusqueda',
-                message: 'Escriba el nombre de la escudería a modificar'
-            },
-        );
+
+        await leerEscuderia();
+
+        const escuderiaAModificar = await inquirer
+            .prompt([
+                {
+                    type: 'number',
+                    name: 'numeroIndice',
+                    message: 'Indice que índice de la escudería a modificar'
+                },
+            ]);
+
         arregloEscuderias.find(
-            (valorActual) => {
+            (valorActual, indiceActual) => {
                 //console.log('valorActual', valorActual);
                 //arregloEscuderiaEncontrada = valorActual
-                const existe = (valorActual.Nombre === busqueda['respuestaBusqueda'])
-                if (existe) {
-                    arregloEscuderiaEncontrada = valorActual
+                //const existe = (indiceActual === escuderiaAModificar['numeroIndice'])
+                if (indiceActual === escuderiaAModificar['numeroIndice']) {
+                    arregloEscuderiaEncontrada = valorActual;
                 }
-                return existe
+                //return existe
             }
         );
+
+        console.log(arregloEscuderiaEncontrada)
 
         const datosEscuderia = await inquirer
             .prompt([
@@ -239,16 +256,18 @@ async function modificarEscuderia() {
             ]);
 
         arregloEscuderias.map(
-            (valorActual) => {
-                valorActual.Nombre = datosEscuderia["nombreEscuderia"]
-                valorActual.Creacion = datosEscuderia["anioEscuderia"]
-                valorActual.Pais = datosEscuderia["paisEscuderia"]
-                valorActual.Activa = datosEscuderia["activaEscuderia"]
-                valorActual.Campeonatos = datosEscuderia["campeonatosEscuderia"]
+            (valorActual, indiceActual) => {
+                if (indiceActual === escuderiaAModificar["numeroIndice"]) {
+                    valorActual.Nombre = datosEscuderia["nombreEscuderia"]
+                    valorActual.Creacion = datosEscuderia["anioEscuderia"]
+                    valorActual.Pais = datosEscuderia["paisEscuderia"]
+                    valorActual.Activa = datosEscuderia["activaEscuderia"]
+                    valorActual.Campeonatos = datosEscuderia["campeonatosEscuderia"]
+                }
                 return valorActual
             }
         );
-        await promesaEscribirArchivo(pathEscuderia, JSON.stringify(arregloEscuderias));
+        await promesaEscribirArchivo(pathEscuderias, JSON.stringify(arregloEscuderias));
     } catch (e) {
         console.log(e)
     }
@@ -256,15 +275,10 @@ async function modificarEscuderia() {
 
 async function eliminarEscuderia() {
     try {
-        const contenido = await promesaLeerArchivo(pathEscuderia)
-        let arregloEscuderias = JSON.parse(contenido)
+        const contenido = await promesaLeerArchivo(pathEscuderias);
+        let arregloEscuderias = JSON.parse(contenido);
 
-        arregloEscuderias.forEach(
-            (valorActual, indiceActual) => {
-                console.log('Indice:', indiceActual)
-                console.log('Escuderia:', valorActual)
-            }
-        )
+        await leerEscuderia();
 
         const escuderiaAEliminar = await inquirer
             .prompt([
@@ -282,7 +296,7 @@ async function eliminarEscuderia() {
 
         if (escuderiaAEliminar["confirmacionEliminacion"]) {
             arregloEscuderias.splice(escuderiaAEliminar["numeroIndice"], 1);
-            await promesaEscribirArchivo(pathEscuderia, JSON.stringify(arregloEscuderias))
+            await promesaEscribirArchivo(pathEscuderias, JSON.stringify(arregloEscuderias))
             console.log('Escudería Eliminada')
         } else {
             console.log('Menos mal te arrepentiste :v')
@@ -294,8 +308,200 @@ async function eliminarEscuderia() {
 
 }
 
+async function leerPiloto() {
+    const contenido = await promesaLeerArchivo(pathPilotos)
+    let arregloPilotos = JSON.parse(contenido)
+
+    arregloPilotos.forEach(
+        (valorActual, indiceActual) => {
+            console.log('Indice:', indiceActual)
+            console.log('Piloto:', valorActual)
+        }
+    )
+}
+
+async function crearPiloto() {
+    try {
+        const datosPiloto = await inquirer
+            .prompt([
+                {
+                    type: 'input',
+                    name: 'nombrePiloto',
+                    message: 'Ingrese el nombre del piloto',
+                },
+                {
+                    type: 'input',
+                    name: 'apellidoPiloto',
+                    message: 'Ingrese el apellido del piloto',
+                },
+                {
+                    type: 'input',
+                    name: 'paisPiloto',
+                    message: 'Ingrese el país de origen del piloto',
+                },
+                {
+                    type: 'number',
+                    name: 'polesPiloto',
+                    message: 'Ingrese la cantidad de pole positions que tiene el piloto',
+                },
+                {
+                    type: 'number',
+                    name: 'victoriasPiloto',
+                    message: 'Ingrese la cantidad de victorias que tiene el piloto',
+                },
+                {
+                    type: 'number',
+                    name: 'campeonatosPiloto',
+                    message: 'Ingrese la cantidad de campeonatos que ha ganado el piloto',
+                },
+                {
+                    type: 'confirm',
+                    name: 'retiradoPiloto',
+                    message: '¿El piloto se encuentra retirado?',
+                },
+            ]);
+        const contenido = await promesaLeerArchivo(pathPilotos)
+        let contenidoNuevo = JSON.parse(contenido)
+        contenidoNuevo.push(
+            {
+                "Nombre": datosPiloto["nombrePiloto"],
+                "Apellido": datosPiloto["apellidoPiloto"],
+                "Pais": datosPiloto["paisPiloto"],
+                "Poles": datosPiloto["polesPiloto"],
+                "Victorias": datosPiloto["victoriasPiloto"],
+                "Campeonatos": datosPiloto["campeonatosPiloto"],
+                "Retirado": datosPiloto["retiradoPiloto"]
+            });
+        await promesaEscribirArchivo(pathPilotos, JSON.stringify(contenidoNuevo));
+    } catch (e) {
+        console.log(e)
+    }
+}
+
+async function modificarPiloto() {
+    try {
+        const contenido = await promesaLeerArchivo(pathPilotos)
+        let arregloPilotos = JSON.parse(contenido)
+        let arregloPilotoEncontrado = []
+
+        await leerPiloto();
+
+        const pilotoAModificar = await inquirer
+            .prompt([
+                {
+                    type: 'number',
+                    name: 'numeroIndice',
+                    message: 'Indice que índice del piloto a modificar'
+                },
+            ]);
+
+        arregloPilotos.find(
+            (valorActual, indiceActual) => {
+                if (indiceActual === pilotoAModificar['numeroIndice']) {
+                    arregloPilotoEncontrado = valorActual;
+                }
+                //return existe
+            }
+        );
+
+        const datosPiloto = await inquirer
+            .prompt([
+                {
+                    type: 'input',
+                    name: 'nombrePiloto',
+                    message: 'Ingrese el nombre del piloto',
+                    default: arregloPilotoEncontrado["Nombre"],
+                },
+                {
+                    type: 'input',
+                    name: 'apellidoPiloto',
+                    message: 'Ingrese el apellido del piloto',
+                    default: arregloPilotoEncontrado["Apellido"],
+                },
+                {
+                    type: 'input',
+                    name: 'paisPiloto',
+                    message: 'Ingrese el país de origen del piloto',
+                    default: arregloPilotoEncontrado["Pais"],
+                },
+                {
+                    type: 'number',
+                    name: 'polesPiloto',
+                    message: 'Ingrese la cantidad de pole positions que tiene el piloto',
+                    default: arregloPilotoEncontrado["Poles"],
+                },
+                {
+                    type: 'number',
+                    name: 'victoriasPiloto',
+                    message: 'Ingrese la cantidad de victorias que tiene el piloto',
+                    default: arregloPilotoEncontrado["Victorias"],
+                },
+                {
+                    type: 'number',
+                    name: 'campeonatosPiloto',
+                    message: 'Ingrese la cantidad de campeonatos que ha ganado el piloto',
+                    default: arregloPilotoEncontrado["Campeonatos"],
+                },
+                {
+                    type: 'confirm',
+                    name: 'retiradoPiloto',
+                    message: '¿El piloto se encuentra retirado?',
+                    default: arregloPilotoEncontrado["Retirado"],
+                },
+            ]);
+
+        arregloPilotos.map(
+            (valorActual, indiceActual) => {
+                if (indiceActual === pilotoAModificar["numeroIndice"]) {
+                    valorActual.Nombre = datosPiloto["nombrePiloto"];
+                    valorActual.Apellido = datosPiloto["apellidoPiloto"];
+                    valorActual.Pais = datosPiloto["paisPiloto"];
+                    valorActual.Poles = datosPiloto["polesPiloto"];
+                    valorActual.Victorias = datosPiloto["victoriasPiloto"];
+                    valorActual.Campeonatos = datosPiloto["campeonatosPiloto"];
+                    valorActual.Retirado = datosPiloto["retiradoPiloto"];
+                }
+                return valorActual
+            }
+        );
+
+        await promesaEscribirArchivo(pathPilotos, JSON.stringify(arregloPilotos));
+    } catch (e) {
+        console.log(e)
+    }
+}
+
+async function eliminarPiloto() {
+    try {
+        const contenido = await promesaLeerArchivo(pathPilotos)
+        let arregloPilotos = JSON.parse(contenido)
+
+        await leerPiloto();
+
+        const pilotoAEliminar = await inquirer
+            .prompt([
+                {
+                    type: 'number',
+                    name: 'numeroIndice',
+                    message: 'Indice el índice del piloto a eliminar'
+                },
+                {
+                    type: 'confirm',
+                    name: 'confirmacionEliminacion',
+                    message: '¿Está seguro que desea eliminar dicho piloto?'
+                },
+            ]);
+
+        if (pilotoAEliminar["confirmacionEliminacion"]) {
+            arregloPilotos.splice(pilotoAEliminar["numeroIndice"], 1);
+            await promesaEscribirArchivo(pathPilotos, JSON.stringify(arregloPilotos))
+            console.log('Piloto Eliminado')
+        } else {
+            console.log('Menos mal te arrepentiste :v')
+        }
+    } catch (e) {
+        console.log(e)
+    }
+}
+
 main();
-
-
-
-

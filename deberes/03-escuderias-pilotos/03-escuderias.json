@@ -11,13 +11,13 @@
     "Creacion": 1954,
     "Pais": "Alemania",
     "Activa": true,
-    "Campeonatos": 6
+    "Campeonatos": 5
   },
   {
     "Nombre": "Ferrari",
     "Creacion": 2000,
     "Pais": "Francia",
     "Activa": false,
-    "Campeonatos": 10
+    "Campeonatos": 11
   }
 ]
