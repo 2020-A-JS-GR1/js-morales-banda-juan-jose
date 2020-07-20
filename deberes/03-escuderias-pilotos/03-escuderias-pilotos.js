@@ -3,6 +3,7 @@ const fs = require('fs');
 
 const pathEscuderias = './03-escuderias.json';
 const pathPilotos = './03-pilotos.json';
+const pathEquipo = './03-equipo.json';
 
 async function main() {
     try {
@@ -13,7 +14,11 @@ async function main() {
                     name: 'menuInicial',
                     message: 'Bienvenido\n' +
                         'Elija con que desea trabajar',
-                    choices: ['Escuderias', 'Pilotos', 'Salir'],
+                    choices: ['Escuderias',
+                        'Pilotos',
+                        'Asignar Piloto',
+                        'Ver Equipos',
+                        'Salir'],
                 },
             ]);
         // console.log('Respuesta', Object.values(respuesta).toString());
@@ -64,6 +69,12 @@ async function main() {
                         throw ("Gracias por usar este programa");
                         break;
                 }
+                break;
+            case 'Asignar Piloto':
+                await asignarPiloto();
+                break;
+            case 'Ver Equipos':
+                await leerEquipo();
                 break;
             case 'Salir':
                 throw ("Gracias por usar este programa");
@@ -128,15 +139,19 @@ const promesaEscribirArchivo = (path, contenidoNuevo) => {
 }
 
 async function leerEscuderia() {
-    const contenido = await promesaLeerArchivo(pathEscuderias)
-    let arregloEscuderias = JSON.parse(contenido)
+    try {
+        const contenido = await promesaLeerArchivo(pathEscuderias)
+        let arregloEscuderias = JSON.parse(contenido)
 
-    arregloEscuderias.forEach(
-        (valorActual, indiceActual) => {
-            console.log('Indice:', indiceActual)
-            console.log('Escuderia:', valorActual)
-        }
-    )
+        arregloEscuderias.forEach(
+            (valorActual, indiceActual) => {
+                console.log('Indice:', indiceActual)
+                console.log('Escuderia:', valorActual)
+            }
+        )
+    } catch (e) {
+        console.log(e)
+    }
 }
 
 async function crearEscuderia() {
@@ -203,7 +218,7 @@ async function modificarEscuderia() {
                 {
                     type: 'number',
                     name: 'numeroIndice',
-                    message: 'Indice que índice de la escudería a modificar'
+                    message: 'Indique el índice de la escudería a modificar'
                 },
             ]);
 
@@ -285,7 +300,7 @@ async function eliminarEscuderia() {
                 {
                     type: 'number',
                     name: 'numeroIndice',
-                    message: 'Indice que índice de la escudería a eliminar'
+                    message: 'Indice el índice de la escudería a eliminar'
                 },
                 {
                     type: 'confirm',
@@ -309,15 +324,19 @@ async function eliminarEscuderia() {
 }
 
 async function leerPiloto() {
-    const contenido = await promesaLeerArchivo(pathPilotos)
-    let arregloPilotos = JSON.parse(contenido)
+    try {
+        const contenido = await promesaLeerArchivo(pathPilotos);
+        let arregloPilotos = JSON.parse(contenido);
 
-    arregloPilotos.forEach(
-        (valorActual, indiceActual) => {
-            console.log('Indice:', indiceActual)
-            console.log('Piloto:', valorActual)
-        }
-    )
+        arregloPilotos.forEach(
+            (valorActual, indiceActual) => {
+                console.log('Indice:', indiceActual);
+                console.log('Piloto:', valorActual);
+            }
+        )
+    } catch (e) {
+        console.log(e);
+    }
 }
 
 async function crearPiloto() {
@@ -391,7 +410,7 @@ async function modificarPiloto() {
                 {
                     type: 'number',
                     name: 'numeroIndice',
-                    message: 'Indice que índice del piloto a modificar'
+                    message: 'Indique el índice del piloto a modificar'
                 },
             ]);
 
@@ -483,7 +502,7 @@ async function eliminarPiloto() {
                 {
                     type: 'number',
                     name: 'numeroIndice',
-                    message: 'Indice el índice del piloto a eliminar'
+                    message: 'Indique el índice del piloto a eliminar'
                 },
                 {
                     type: 'confirm',
@@ -499,6 +518,85 @@ async function eliminarPiloto() {
         } else {
             console.log('Menos mal te arrepentiste :v')
         }
+    } catch (e) {
+        console.log(e)
+    }
+}
+
+async function leerEquipo() {
+    try {
+        const contenido = await promesaLeerArchivo(pathEquipo)
+        let arregloEquipo = JSON.parse(contenido)
+
+        arregloEquipo.forEach(
+            (valorActual, indiceActual) => {
+                console.log('Indice:', indiceActual)
+                console.log('Equipo:', valorActual)
+            }
+        )
+    } catch (e) {
+        console.log(e);
+    }
+}
+
+async function asignarPiloto() {
+    try {
+        const contenidoPilotos = await promesaLeerArchivo(pathPilotos);
+        const contenidoEscuderias = await promesaLeerArchivo(pathEscuderias);
+        let arregloPilotos = JSON.parse(contenidoPilotos);
+        let arregloEscuderias = JSON.parse(contenidoEscuderias);
+        let arregloPilotoEncontrado = [];
+        let arregloEscuderiaEncontrada = [];
+
+        await leerPiloto();
+
+        const pilotoParaAsignar = await inquirer
+            .prompt([
+                {
+                    type: 'number',
+                    name: 'numeroIndice',
+                    message: 'Indique el índice del piloto que asignará a una escudería'
+                },
+            ]);
+
+        arregloPilotos.find(
+            (valorActual, indiceActual) => {
+                if (indiceActual === pilotoParaAsignar['numeroIndice']) {
+                    arregloPilotoEncontrado = valorActual;
+                }
+                //return existe
+            }
+        );
+
+        await leerEscuderia();
+
+        const escuderiaParaAsignar = await inquirer
+            .prompt([
+                {
+                    type: 'number',
+                    name: 'numeroIndice',
+                    message: 'Indique el índice de la escudería a la que asignará el piloto'
+                },
+            ]);
+
+        arregloEscuderias.find(
+            (valorActual, indiceActual) => {
+                if (indiceActual === escuderiaParaAsignar['numeroIndice']) {
+                    arregloEscuderiaEncontrada = valorActual;
+                }
+                //return existe
+            }
+        );
+
+        const contenido = await promesaLeerArchivo(pathEquipo)
+        let contenidoNuevo = JSON.parse(contenido)
+        contenidoNuevo.push(
+            {
+                "Escuderia": arregloEscuderiaEncontrada["Nombre"],
+                "Piloto": arregloPilotoEncontrado["Nombre"] + ' ' + arregloPilotoEncontrado["Apellido"],
+            });
+        await promesaEscribirArchivo(pathEquipo, JSON.stringify(contenidoNuevo));
+        console.log('Piloto asignado');
     } catch (e) {
         console.log(e)
     }
