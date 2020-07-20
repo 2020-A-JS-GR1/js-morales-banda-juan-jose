@@ -1,8 +1,23 @@
 [
   {
-    "nombre": "Ferrari"
+    "Nombre": "Ferrari",
+    "Creacion": 1929,
+    "Pais": "Italia",
+    "Activa": true,
+    "Campeonatos": 16
   },
   {
-    "nombres": "Ferrari"
+    "Nombre": "Mercedes",
+    "Creacion": 1954,
+    "Pais": "Alemania",
+    "Activa": true,
+    "Campeonatos": 5
+  },
+  {
+    "Nombre": "Ferrari",
+    "Creacion": 2000,
+    "Pais": "Francia",
+    "Activa": false,
+    "Campeonatos": 11
   }
 ]

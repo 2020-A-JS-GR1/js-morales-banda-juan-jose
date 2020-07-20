@@ -1,0 +1,20 @@
+[
+  {
+    "Nombre": "Lewis",
+    "Apellido": "Hamilton",
+    "Pais": "Gran Bretaña",
+    "Poles": 90,
+    "Victorias": 86,
+    "Campeonatos": 6,
+    "Retirado": false
+  },
+  {
+    "Nombre": "Felipe",
+    "Apellido": "Massa",
+    "Pais": "Brasil",
+    "Poles": 16,
+    "Victorias": 11,
+    "Campeonatos": 0,
+    "Retirado": true
+  }
+]
