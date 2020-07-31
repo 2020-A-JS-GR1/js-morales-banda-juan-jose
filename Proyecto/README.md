@@ -1,7 +1,7 @@
 ## Proyecto
 
 ### Integrantes
-Juan López
+Juan López  
 Juan José Morales
 
 ### Enlace
