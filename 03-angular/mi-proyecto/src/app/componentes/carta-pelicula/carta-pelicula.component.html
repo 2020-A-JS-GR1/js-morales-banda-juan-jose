@@ -1,0 +1,19 @@
+<!-- Propert Binding -->
+<!-- Setear valores a propiedades de una etiqueta -->
+<img 
+[src]="urlEjemploImagen"
+alt="">
+
+<!-- INTERPOLACIÓN -->
+<!-- Para texto que se muestra en interfaz -->
+<a [href]="linkTextoEjemplo">
+    <p>{{textoEjemplo}}</p>
+</a>
+
+<!-- Event Binding -->
+<!-- Para traer funciones -->
+<button
+(click)="ejemploFuncion()"
+(blur)="eventoOnBlur()">
+    {{textoEjemplo}}
+</button>
