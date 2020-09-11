@@ -33,10 +33,10 @@
 
 </app-carta-pelicula>
 
-
-<div *ngFor="let usuario of arregloUsuarios">
-  {{usuario.nombre}}
-</div>
+<!-- Iterar los usuarios del backend -->
+<!--<div *ngFor="let usuario of arregloUsuarios">-->
+<!--  {{usuario.nombre}}-->
+<!--</div>-->
 
 <ul>
   <li>
@@ -47,6 +47,11 @@
   <li>
     <a [routerLink]="['login']">
       Ir a Login
+    </a>
+  </li>
+  <li>
+    <a [routerLink]="['usuario']">
+      Usuarios
     </a>
   </li>
 </ul>
