@@ -1,4 +1,8 @@
-
+<label for="busquedaID">Búsqueda</label>
+<input id="busquedaID" name="busqueda" type="text" [(ngModel)]="busquedaModelo">
+<button (click)="filtrarArreglo()">
+  Buscar
+</button>
 
 <table>
   <tr>

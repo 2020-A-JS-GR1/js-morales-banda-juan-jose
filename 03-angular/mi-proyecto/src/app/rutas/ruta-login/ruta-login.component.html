@@ -1,1 +1,15 @@
-<p>ruta-login works!</p>
+<form #formularioLogin = "ngForm"
+      (ngSubmit)="revisarLogin(formularioLogin)">
+  <label for="correoID">Correo: </label>
+  <input id="correoID" name="correo" type="text" [(ngModel)]="correoModelo">
+
+  <label for="cedulaID">Cedula: </label>
+  <input id="cedulaID" name="cedula" type="text" [(ngModel)]="cedulaModelo">
+
+  <button>
+    Logearse
+  </button>
+
+</form>
+
+

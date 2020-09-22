@@ -3,3 +3,16 @@
 <p>{{usuario?.nombre}}</p>
 <!-- para poder mosotrar un dato que llegará en el futuro se pone ? antes del . -->
 <p>{{usuario?.cedula}}</p>
+
+
+<div *ngIf="mostrarFormulario">
+  <app-formulario-usuario
+    [nombreInput]="usuario?.nombre"
+    [cedulaInput]="usuario?.cedula"
+    [estadoCivilInput]="usuario?.estadoCivil"
+    (informacionValidada)="editarUsuario($event)"
+  >
+
+  </app-formulario-usuario>
+</div>
+
