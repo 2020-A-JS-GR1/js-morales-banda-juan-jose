@@ -1,5 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {UsuarioService} from "./services/http/usuario.service";
+import {AuthService} from "./services/auth/auth.service";
 
 @Component({
   selector: 'aplicacion-nueva',
@@ -40,7 +41,8 @@ export class AppComponent implements OnInit {
 
   //INYECTAR DEPENDENCIAS
   constructor(
-    private readonly _usuarioService: UsuarioService
+    private readonly _usuarioService: UsuarioService,
+    readonly _authService: AuthService,
   ) {
   }
 
@@ -61,25 +63,25 @@ export class AppComponent implements OnInit {
     this.arregloObservables.push(subscripcion)
   }
 
-  crearUsuario() {
-    const usuarioNuevo = {
-      cedula: "7777777777",
-      nombre: "Inori",
-      apellido: "Yuzuriha"
-    };
-    const obsCrearUsuario = this._usuarioService.crear(usuarioNuevo)
-    const subscripcion = obsCrearUsuario
-      .subscribe(
-        (datos) => {
-          console.log('Nuevo Usuario', datos)
-          this.mensajeConsola(true)
-        },
-        (error) => {
-          console.log(error)
-        }
-      )
-    this.arregloObservables.push(subscripcion)
-  }
+  // crearUsuario() {
+  //   const usuarioNuevo = {
+  //     cedula: "7777777777",
+  //     nombre: "Inori",
+  //     apellido: "Yuzuriha"
+  //   };
+  //   const obsCrearUsuario = this._usuarioService.crear(usuarioNuevo)
+  //   const subscripcion = obsCrearUsuario
+  //     .subscribe(
+  //       (datos) => {
+  //         console.log('Nuevo Usuario', datos)
+  //         this.mensajeConsola(true)
+  //       },
+  //       (error) => {
+  //         console.log(error)
+  //       }
+  //     )
+  //   this.arregloObservables.push(subscripcion)
+  // }
 
   ngOnInit() {
     this.mensajeConsola(true)

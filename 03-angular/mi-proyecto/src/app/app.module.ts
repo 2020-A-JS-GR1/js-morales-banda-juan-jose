@@ -1,6 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { CartaPeliculaComponent } from './componentes/carta-pelicula/carta-pelicula.component';
@@ -15,6 +14,10 @@ import { RutaCrearUsuarioComponent } from './rutas/ruta-crear-usuario/ruta-crear
 import { RutaEditarUsuarioComponent } from './rutas/ruta-editar-usuario/ruta-editar-usuario.component';
 import { FormularioUsuarioComponent } from './componentes/formularios/formulario-usuario/formulario-usuario.component';
 import {FormsModule} from "@angular/forms";
+import {AuthService} from "./services/auth/auth.service";
+import {EstaLogeadoGuard} from "./services/guards/esta-logeado.guard";
+import {EsAdministradorGuard} from "./services/guards/es-administrador.guard";
+import {EsSupervisorGuard} from "./services/guards/es-supervisor.guard";
 
 @NgModule({
   declarations: [  // Componentes
@@ -36,7 +39,11 @@ import {FormsModule} from "@angular/forms";
     FormsModule,  // Permite funcionalidad formularios Template
   ],
   providers: [  // Servicios
-    UsuarioService
+    UsuarioService,
+    AuthService,
+    EstaLogeadoGuard,
+    EsAdministradorGuard,
+    EsSupervisorGuard,
   ],
   bootstrap: [AppComponent]
 })
