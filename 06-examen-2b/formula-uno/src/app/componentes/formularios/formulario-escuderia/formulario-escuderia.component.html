@@ -1,0 +1,83 @@
+<form #formularioPiloto="ngForm"
+      (ngSubmit)="crearEscuderia(formularioPiloto)">
+  <div>
+    <label for="nombreId">Nombre: </label>
+    <input id="nombreId"
+           type="text"
+           name="nombre"
+           placeholder="Nombre de la escudería"
+           [(ngModel)]="nombreModelo"
+           required
+           minlength="3"
+           #nombreCampo="ngModel">
+
+    <div *ngIf="nombreCampo.touched && nombreCampo.errors">
+      <p *ngIf="nombreCampo.errors.required">Error: Campo requerido</p>
+      <p *ngIf="nombreCampo.errors.minlength">Error: Longitud minima 3</p>
+    </div>
+
+  </div>
+  <div>
+    <label for="anioID">Año de creación: </label>
+    <input id="anioID"
+           type="text"
+           placeholder="Año en el que se creó"
+           name="anio"
+           [(ngModel)]="anioModelo"
+           required>
+  </div>
+  <div>
+    <label for="paisID">País: </label>
+    <input id="paisID"
+           type="text"
+           placeholder="País de la escudería"
+           name="pais"
+           [(ngModel)]="paisModelo"
+           required>
+  </div>
+  <div>
+    <label for="activaID">¿Está activa?: </label>
+    <select id="activaID"
+            name="activa"
+            [(ngModel)]="activaModelo"
+            required>
+      <option [ngValue]="true">Sí</option>
+      <option [ngValue]="false">No</option>
+    </select>
+  </div>
+  <div>
+    <label for="directorID">Director General: </label>
+    <input id="directorID"
+           type="text"
+           placeholder="Nombre del director general"
+           name="director"
+           [(ngModel)]="directorModelo"
+           required>
+  </div>
+  <div>
+    <label for="motorID">Motor: </label>
+    <input id="motorID"
+           type="text"
+           placeholder="Motor actual de la escudería"
+           name="motor"
+           [(ngModel)]="motorModelo"
+           required>
+  </div>
+  <div>
+    <label for="campeonatosID">Campeonatos: </label>
+    <input id="campeonatosID"
+           type="number"
+           min=0
+           placeholder="Cantidad de campeonatos en F1"
+           name="cantidad_campeonatos"
+           [(ngModel)]="campeonatosModelo"
+           required>
+  </div>
+  <button type="submit" [disabled]="!formularioPiloto.form.valid">
+    Submit
+  </button>
+  <button type="reset">
+    Reset
+  </button>
+</form>
+

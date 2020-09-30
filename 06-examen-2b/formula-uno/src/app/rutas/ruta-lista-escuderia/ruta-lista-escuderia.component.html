@@ -1,0 +1,48 @@
+<div class="row">
+  <div *ngFor="let escuderia of arregloEscuderias">
+    <div class="col-lg-4">
+      <div class="card border-primary mb-3" style="width: 18rem;">
+        <div class="card-body">
+          <h4 class="card-title font-weight-bold font-italic">
+            ID: {{escuderia.id}} - {{escuderia.nombre}}
+          </h4>
+          <p class="card-text">
+            Año de creación: {{escuderia.anio_creacion}}
+          </p>
+          <p class="card-text">
+            País: {{escuderia.pais}}
+          </p>
+          <p class="card-text" *ngIf="escuderia.activa === true">
+            Activa: Si
+          </p>
+          <p class="card-text" *ngIf="escuderia.activa === false">
+            Activa: No
+          </p>
+          <p class="card-text">
+            Director General: {{escuderia.director}}
+          </p>
+          <p class="card-text">
+            Motor Actual: {{escuderia.motor}}
+          </p>
+          <p class="card-text">
+            Campeonatos de constructores: {{escuderia.cantidad_campeonatos}}
+          </p>
+          <button class="btn btn-info btn-block" (click)="irAVerPilotos(escuderia.id)">
+            Ver Pilotos
+          </button>
+          <button class="btn btn-primary btn-block" (click)="irAEditarEscuderia(escuderia.id)">
+            Editar
+          </button>
+          <button class="btn btn-danger btn-block" (click)="eliminarEscuderia(escuderia.id)">
+            Eliminar
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<router-outlet></router-outlet>
+
+
+

@@ -59,11 +59,10 @@ export class RutaEditarUsuarioComponent implements OnInit {
         (datos) => {
           const url = ['/usuario', 'lista'];
           this._router.navigate(url);
+        },
+        (error) => {
+          console.error('Error', error)
         }
-      ),
-      (error) => {
-        console.error('Error', error)
-      }
+      )
   }
-
 }

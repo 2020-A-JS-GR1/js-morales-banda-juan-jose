@@ -1,0 +1,45 @@
+<div class="row">
+  <div *ngFor="let piloto of arregloPilotos">
+    <div class="col-lg-4">
+      <div class="card border-primary mb-3" style="width: 18rem;">
+        <div class="card-body">
+          <h4 class="card-title font-weight-bold font-italic">
+            ID: {{piloto.id}} - {{piloto.nombre}} {{piloto.apellido}}
+          </h4>
+          <p class="card-text">
+            País: {{piloto.pais}}
+          </p>
+          <p class="card-text">
+            Pole Positions: {{piloto.pole_positions}}
+          </p>
+          <p class="card-text">
+            Victorias: {{piloto.cantidad_victorias}}
+          </p>
+          <p class="card-text">
+            Campeonatos de pilotos: {{piloto.cantidad_campeonatos}}
+          </p>
+          <p class="card-text" *ngIf="piloto.retirado === true">
+            Retirado: Si
+          </p>
+          <p class="card-text" *ngIf="piloto.retirado === false">
+            Retirado: No
+          </p>
+          <p class="card-text" *ngIf="piloto.escuderia !== null">
+            Escuderia: {{piloto.escuderia.nombre}}
+          </p>
+          <p class="card-text" *ngIf="piloto.escuderia === null" >
+            Escuderia: Por Asignar
+          </p>
+          <button class="btn btn-primary btn-block" (click)="irAEditarPiloto(piloto.id)">
+            Editar
+          </button>
+          <button class="btn btn-danger btn-block" (click)="eliminarPiloto(piloto.id)">
+            Eliminar
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!--<router-outlet></router-outlet>-->
