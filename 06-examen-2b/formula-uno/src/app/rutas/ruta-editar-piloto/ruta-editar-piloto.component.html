@@ -1,0 +1,27 @@
+<div *ngIf="mostrarFormulario">
+  <app-formulario-piloto
+    *ngIf="piloto?.escuderia !== null"
+    [nombreInput]="piloto?.nombre"
+    [apellidoInput]="piloto?.apellido"
+    [paisInput]="piloto?.pais"
+    [polePositionsInput]="piloto?.pole_positions"
+    [victoriasInput]="piloto?.cantidad_victorias"
+    [campeonatosInput]="piloto?.cantidad_campeonatos"
+    [retiradoInput]="piloto?.retirado"
+    [escuderiaInput]="piloto?.escuderia.id"
+    (informacionValidada)="editarPiloto($event)">
+  </app-formulario-piloto>
+
+  <app-formulario-piloto
+    *ngIf="piloto?.escuderia === null"
+    [nombreInput]="piloto?.nombre"
+    [apellidoInput]="piloto?.apellido"
+    [paisInput]="piloto?.pais"
+    [polePositionsInput]="piloto?.pole_positions"
+    [victoriasInput]="piloto?.cantidad_victorias"
+    [campeonatosInput]="piloto?.cantidad_campeonatos"
+    [retiradoInput]="piloto?.retirado"
+    [escuderiaInput]=-1
+    (informacionValidada)="editarPiloto($event)">
+  </app-formulario-piloto>
+</div>

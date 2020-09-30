@@ -1,0 +1,13 @@
+<div *ngIf="mostrarFormulario">
+  <app-formulario-escuderia
+    [nombreInput]="escuderia?.nombre"
+    [anioInput]="escuderia?.anio_creacion"
+    [paisInput]="escuderia?.pais"
+    [activaInput]="escuderia?.activa"
+    [directorInput]="escuderia?.director"
+    [motorInput]="escuderia?.motor"
+    [campeonatosInput]="escuderia?.cantidad_campeonatos"
+    (informacionValidada)="editarEscuderia($event)">
+
+  </app-formulario-escuderia>
+</div>

@@ -14,7 +14,7 @@ export class RutaListaUsuarioComponent implements OnInit {
 
   constructor( // inyecta dependencias
     private readonly _usuarioService: UsuarioService,
-    private readonly _router: Router
+    private readonly _router: Router,
   ) {
 
   }

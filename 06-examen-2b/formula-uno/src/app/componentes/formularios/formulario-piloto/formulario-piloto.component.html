@@ -1,0 +1,126 @@
+<form #formularioPiloto="ngForm"
+      (ngSubmit)="crearPiloto(formularioPiloto)"
+      class="mb-3">
+  <div class="input-group mb-1">
+    <label for="nombreId" class="input-group-text">Nombre: </label>
+    <input id="nombreId"
+           type="text"
+           placeholder="Nombre del piloto"
+           name="nombre"
+           class="form-control"
+           [(ngModel)]="nombreModelo"
+           required
+           #validarNombre="ngModel">
+
+    <div *ngIf="validarNombre.touched && validarNombre.errors">
+      <p *ngIf="validarNombre.errors.required">Error: Campo requerido</p>
+    </div>
+  </div>
+  <div class="input-group mb-1">
+    <label for="apellidoID" class="input-group-text">Apellido: </label>
+    <input id="apellidoID"
+           type="text"
+           placeholder="Apellido del piloto"
+           name="apellido"
+           class="form-control"
+           [(ngModel)]="apellidoModelo"
+           required
+           #validarApellido="ngModel">
+
+    <div *ngIf="validarApellido.touched && validarApellido.errors">
+      <p *ngIf="validarApellido.errors.required">Error: Campo requerido</p>
+    </div>
+  </div>
+  <div class="input-group mb-1">
+    <label for="paisID" class="input-group-text">País: </label>
+    <input id="paisID"
+           type="text"
+           placeholder="País del piloto"
+           name="pais"
+           class="form-control"
+           [(ngModel)]="paisModelo"
+           required
+           #validarPais="ngModel">
+
+    <div *ngIf="validarPais.touched && validarPais.errors">
+      <p *ngIf="validarPais.errors.required">Error: Campo requerido</p>
+    </div>
+  </div>
+  <div class="input-group mb-1">
+    <label for="polePositionsID" class="input-group-text">Pole Positions: </label>
+    <input id="polePositionsID"
+           type="number"
+           min=0
+           placeholder="Cantidad de pole positions en F1"
+           name="pole_positions"
+           class="form-control"
+           [(ngModel)]="polePositionsModelo"
+           required
+           #validarPoles="ngModel">
+
+    <div *ngIf="validarPoles.touched && validarPoles.errors">
+      <p *ngIf="validarPoles.errors.required">Error: Campo requerido</p>
+    </div>
+  </div>
+  <div class="input-group mb-1">
+    <label for="victoriasID" class="input-group-text">Victorias: </label>
+    <input id="victoriasID"
+           type="number"
+           min=0
+           placeholder="Cantidad de victorias en F1"
+           name="cantidad_victorias"
+           class="form-control"
+           [(ngModel)]="victoriasModelo"
+           required
+           #validarVictorias="ngModel">
+
+    <div *ngIf="validarVictorias.touched && validarVictorias.errors">
+      <p *ngIf="validarVictorias.errors.required">Error: Campo requerido</p>
+    </div>
+  </div>
+  <div class="input-group mb-1">
+    <label for="campeonatosID" class="input-group-text">Campeonatos: </label>
+    <input id="campeonatosID"
+           type="number"
+           min=0
+           placeholder="Cantidad de campeonatos en F1"
+           name="cantidad_campeonatos"
+           class="form-control"
+           [(ngModel)]="campeonatosModelo"
+           required
+           #validarCampeonatos="ngModel">
+
+    <div *ngIf="validarCampeonatos.touched && validarCampeonatos.errors">
+      <p *ngIf="validarCampeonatos.errors.required">Error: Campo requerido</p>
+    </div>
+  </div>
+  <div class="input-group mb-1">
+    <label for="retiradoID" class="input-group-text">¿Está retirado?: </label>
+    <select id="retiradoID"
+            name="retirado"
+            class="custom-select"
+            [(ngModel)]="retiradoModelo"
+            required>
+      <option [ngValue]="true">Sí</option>
+      <option [ngValue]="false">No</option>
+    </select>
+  </div>
+  <div class="input-group mb-1">
+    <label for="escuderiaID" class="input-group-text">Escuderias: </label>
+    <select id="escuderiaID"
+            name="retirado"
+            class="custom-select"
+            [(ngModel)]="escuderiaModelo">
+      <option [ngValue]=-1>Por Asignar</option>
+      <option *ngFor="let escuderia of arregloEscuderias" value="{{escuderia.id}}">{{escuderia.nombre}}</option>
+    </select>
+  </div>
+  <button class="btn btn-primary"
+          type="submit" [disabled]="!formularioPiloto.form.valid">
+    Submit
+  </button>
+  <button class="btn btn-secondary" type="reset">
+    Reset
+  </button>
+</form>
+
