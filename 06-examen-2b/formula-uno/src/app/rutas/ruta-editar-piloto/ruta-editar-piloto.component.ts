@@ -42,6 +42,12 @@ export class RutaEditarPilotoComponent implements OnInit {
   }
 
   editarPiloto(piloto) {
+    // console.log('editar:', piloto)
+    const idEscuderia = Number(piloto.escuderia)
+    if (idEscuderia == -1) {
+      piloto.escuderia = null
+    }
+    // console.log('editar2:', piloto)
     const obsEditarPiloto = this._pilotoService.editar(piloto, this.piloto.id);
     obsEditarPiloto
       .subscribe(

@@ -20,6 +20,9 @@ export class RutaCrearPilotoComponent implements OnInit {
 
   crearPiloto(piloto) {
     // console.log('piloto:', piloto)
+    if (piloto.escuderia == -1) {
+      piloto.escuderia = null
+    }
     const observableCrear = this._pilotoService.crear(piloto)
     observableCrear
       .subscribe(

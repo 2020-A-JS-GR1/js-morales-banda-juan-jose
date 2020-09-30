@@ -65,7 +65,6 @@ const routes: Routes = [
       },
     ]
   },
-
   {
     path: '',
     redirectTo: 'inicio',

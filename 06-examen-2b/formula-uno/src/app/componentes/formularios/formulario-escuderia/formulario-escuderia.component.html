@@ -1,83 +1,117 @@
 <form #formularioPiloto="ngForm"
-      (ngSubmit)="crearEscuderia(formularioPiloto)">
-  <div>
-    <label for="nombreId">Nombre: </label>
+      (ngSubmit)="crearEscuderia(formularioPiloto)"
+      class="mb-3">
+  <div class="input-group mb-1">
+    <label for="nombreId" class="input-group-text">Nombre: </label>
     <input id="nombreId"
            type="text"
            name="nombre"
            placeholder="Nombre de la escudería"
+           class="form-control"
            [(ngModel)]="nombreModelo"
            required
-           minlength="3"
-           #nombreCampo="ngModel">
+           #validarNombre="ngModel">
 
-    <div *ngIf="nombreCampo.touched && nombreCampo.errors">
-      <p *ngIf="nombreCampo.errors.required">Error: Campo requerido</p>
-      <p *ngIf="nombreCampo.errors.minlength">Error: Longitud minima 3</p>
+    <div *ngIf="validarNombre.touched && validarNombre.errors">
+      <p *ngIf="validarNombre.errors.required">Error: Campo requerido</p>
     </div>
 
   </div>
-  <div>
-    <label for="anioID">Año de creación: </label>
+  <div class="input-group mb-1">
+    <label for="anioID" class="input-group-text">Año de creación: </label>
     <input id="anioID"
            type="text"
            placeholder="Año en el que se creó"
            name="anio"
+           class="form-control"
            [(ngModel)]="anioModelo"
-           required>
+           required
+           #validarCreacion="ngModel">
+
+    <div *ngIf="validarCreacion.touched && validarCreacion.errors">
+      <p *ngIf="validarCreacion.errors.required">Error: Campo requerido</p>
+    </div>
   </div>
-  <div>
-    <label for="paisID">País: </label>
+  <div class="input-group mb-1">
+    <label for="paisID" class="input-group-text">País: </label>
     <input id="paisID"
            type="text"
            placeholder="País de la escudería"
            name="pais"
+           class="form-control"
            [(ngModel)]="paisModelo"
-           required>
+           required
+           #validarPais="ngModel">
+
+    <div *ngIf="validarPais.touched && validarPais.errors">
+      <p *ngIf="validarPais.errors.required">Error: Campo requerido</p>
+    </div>
   </div>
-  <div>
-    <label for="activaID">¿Está activa?: </label>
+  <div class="input-group mb-1">
+    <label for="activaID" class="input-group-text">¿Está activa?: </label>
     <select id="activaID"
             name="activa"
+            class="custom-select"
             [(ngModel)]="activaModelo"
             required>
       <option [ngValue]="true">Sí</option>
       <option [ngValue]="false">No</option>
     </select>
   </div>
-  <div>
-    <label for="directorID">Director General: </label>
+  <div class="input-group mb-1">
+    <label for="directorID" class="input-group-text">Director General: </label>
     <input id="directorID"
            type="text"
            placeholder="Nombre del director general"
            name="director"
+           class="form-control"
            [(ngModel)]="directorModelo"
-           required>
+           required
+           #validarDirector="ngModel">
+
+    <div *ngIf="validarDirector.touched && validarDirector.errors">
+      <p *ngIf="validarDirector.errors.required">Error: Campo requerido</p>
+    </div>
   </div>
-  <div>
-    <label for="motorID">Motor: </label>
+  <div class="input-group mb-1">
+    <label for="motorID" class="input-group-text">Motor: </label>
     <input id="motorID"
            type="text"
            placeholder="Motor actual de la escudería"
            name="motor"
+           class="form-control"
            [(ngModel)]="motorModelo"
-           required>
+           required
+           #validarMotor="ngModel">
+
+    <div *ngIf="validarMotor.touched && validarMotor.errors">
+      <p *ngIf="validarMotor.errors.required">Error: Campo requerido</p>
+    </div>
   </div>
-  <div>
-    <label for="campeonatosID">Campeonatos: </label>
+  <div class="input-group mb-1">
+    <label for="campeonatosID" class="input-group-text">Campeonatos: </label>
     <input id="campeonatosID"
            type="number"
            min=0
            placeholder="Cantidad de campeonatos en F1"
            name="cantidad_campeonatos"
+           class="form-control"
            [(ngModel)]="campeonatosModelo"
-           required>
+           required
+           #validarCampeonatos="ngModel">
+
+    <div *ngIf="validarCampeonatos.touched && validarCampeonatos.errors">
+      <p *ngIf="validarCampeonatos.errors.required">Error: Campo requerido</p>
+    </div>
   </div>
-  <button type="submit" [disabled]="!formularioPiloto.form.valid">
-    Submit
-  </button>
-  <button type="reset">
-    Reset
-  </button>
+  <div class="input-group mb-1">
+    <button class="btn btn-primary"
+            type="submit" [disabled]="!formularioPiloto.form.valid">
+      Submit
+    </button>
+    <button class="btn btn-secondary" type="reset">
+      Reset
+    </button>
+  </div>
 </form>
 

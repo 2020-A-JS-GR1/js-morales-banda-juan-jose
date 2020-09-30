@@ -72,6 +72,9 @@ export class FormularioPilotoComponent implements OnInit {
 
   crearPiloto(formulario) {
     // console.log('form: ', formulario)
+    if (this.escuderiaModelo === 0) {
+      this.escuderiaModelo = null
+    }
     this.informacionValidada.emit({
       nombre: this.nombreModelo,
       apellido: this.apellidoModelo,

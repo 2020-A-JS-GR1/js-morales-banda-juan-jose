@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {PilotoService} from "../../services/http/piloto.service";
 import {ActivatedRoute, Router} from "@angular/router";
+import {EscuderiaService} from "../../services/http/escuderia.service";
 
 @Component({
   selector: 'app-ruta-lista-piloto',
@@ -10,9 +11,11 @@ import {ActivatedRoute, Router} from "@angular/router";
 export class RutaListaPilotoComponent implements OnInit {
 
   arregloPilotos = [];
+  nombreEscuderia;
 
   constructor(
     private readonly _pilotoService: PilotoService,
+    private readonly _escuderiaService: EscuderiaService,
     private readonly _activatedRoute: ActivatedRoute,
     private readonly _router: Router,
   ) {
@@ -60,6 +63,18 @@ export class RutaListaPilotoComponent implements OnInit {
           const longitud = Object.keys(parametros).length
           if (longitud > 0) {
             const idEscuderia = Number(parametros.id)
+
+            const obsEscuderia = this._escuderiaService.obtenerUnoPorId(idEscuderia)
+            obsEscuderia
+              .subscribe(
+                (escuderia: any) => {
+                  this.nombreEscuderia = escuderia.nombre
+                },
+                error => {
+                  console.log('Error:', error)
+                }
+              )
+
             const consulta = {
               escuderia: idEscuderia
             }
@@ -77,6 +92,7 @@ export class RutaListaPilotoComponent implements OnInit {
               )
           } else {
             this.filtrarArreglo()
+            this.nombreEscuderia = null
           }
         }
       )
